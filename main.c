@@ -3,6 +3,10 @@ void main () {
     return;
 }
 
+int kelvin() {
+    return 1;
+}
+
 int reynold () {
     return 2;
 }
@@ -10,3 +14,4 @@ int reynold () {
 int diana () {
     return 0;
 }
+
