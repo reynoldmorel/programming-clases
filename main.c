@@ -5,3 +5,4 @@ void main () {
 int diana () {
     return 0;
 }
+
