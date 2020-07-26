@@ -6,3 +6,7 @@ void main () {
 int reynold () {
     return 2;
 }
+
+int diana () {
+    return 0;
+}
