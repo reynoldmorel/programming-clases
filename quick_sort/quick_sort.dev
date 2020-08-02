@@ -1,6 +1,6 @@
 [Project]
-FileName=recursive_fns.dev
-Name=recursive_fns
+FileName=quick_sort.dev
+Name=quick_sort
 Type=1
 Ver=2
 ObjFiles=
@@ -19,7 +19,7 @@ ObjectOutput=
 LogOutput=
 LogOutputEnabled=0
 OverrideOutput=0
-OverrideOutputName=recursive_fns.exe
+OverrideOutputName=quick_sort.exe
 HostApplication=
 UseCustomMakefile=0
 CustomMakefile=
