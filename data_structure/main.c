@@ -91,6 +91,12 @@ List *initialize_list(int size)
 	return list;
 }
 
+void *release_list(List *list)
+{
+	free(list->items);
+	free(list);
+}
+
 int main(int argc, char *argv[])
 {
 	list = initialize_list(10);
@@ -114,7 +120,7 @@ int main(int argc, char *argv[])
 	list->set(list, 0, 20);
 	list->print_items(list);
 
-	free(list);
+	release_list(list);
 
 	return 0;
 }
