@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MAX_TEXT_LENGTH 1000
-
 int split_word_count = 0;
 
 typedef struct Key
@@ -28,6 +26,7 @@ typedef struct Map
 	void (*put)(struct Map *self, char *key, int value);
 	void (*print_key_values)(struct Map *self);
 	void (*sort_keys)(struct Map *self);
+	void (*delete)(struct Map *self, char *key);
 } Map;
 
 void local_memset_values_to_null(Value **values, int from, int end)
@@ -40,10 +39,10 @@ void local_memset_values_to_null(Value **values, int from, int end)
 
 char **split_words(char *text)
 {
-	char **result = malloc(MAX_TEXT_LENGTH * sizeof(char *));
+	char **result = malloc(sizeof(char *));
 	int result_index = 0;
 
-	result[result_index] = malloc(MAX_TEXT_LENGTH * sizeof(char));
+	result[result_index] = malloc(sizeof(char));
 
 	int text_length = strlen(text);
 	int last_word_index = 0;
@@ -59,11 +58,13 @@ char **split_words(char *text)
 			result[result_index][text_index - last_word_index] = '\0';
 			result_index++;
 			last_word_index = text_index + 1;
-			result[result_index] = malloc(MAX_TEXT_LENGTH * sizeof(char));
+			result = realloc(result, (result_index + 1) * sizeof(char *));
+			result[result_index] = malloc(sizeof(char));
 		}
 		else
 		{
 			result[result_index][text_index - last_word_index] = c;
+			result[result_index] = realloc(result[result_index], (text_index - last_word_index + 2) * sizeof(char));
 		}
 	}
 
@@ -76,7 +77,7 @@ char **split_words(char *text)
 char *filter_characters(char *text)
 {
 	int text_length = strlen(text);
-	char *result = malloc(text_length * sizeof(char));
+	char *result = malloc(sizeof(char));
 	int result_index = 0;
 
 	for (int text_index = 0; text_index < text_length; text_index++)
@@ -86,12 +87,28 @@ char *filter_characters(char *text)
 		if (c == ' ' || (c >= 97 && c <= 122))
 		{
 			result[result_index++] = c;
+			result = realloc(result, (result_index + 1) * sizeof(char));
 		}
 	}
 
 	result[result_index] = '\0';
 
 	return result;
+}
+
+int find_key_index(Map *self, int hash_code)
+{
+	for (int i = 0; i < self->size; i++)
+	{
+		Key *key = self->keys[i];
+
+		if (key->hash == hash_code)
+		{
+			return i;
+		}
+	}
+
+	return -1;
 }
 
 int hash(char *key)
@@ -177,6 +194,34 @@ void put(Map *self, char *key, int value)
 	self->values[hash_code] = v;
 }
 
+void delete_key(Map *self, int index)
+{
+	for (int i = index + 1; i < self->size - 1; i++)
+	{
+		self->keys[i - 1] = self->keys[i];
+	}
+
+	self->size--;
+	Key **tmp = malloc(self->size * sizeof(Key *));
+	memcpy(tmp, self->keys, self->size * sizeof(Key *));
+
+	free(self->keys);
+
+	self->keys = tmp;
+}
+
+void delete (Map *self, char *key)
+{
+	int hash_code = hash(key);
+	int key_index_to_delete = find_key_index(self, hash_code);
+
+	delete_key(self, key_index_to_delete);
+
+	free(self->values[hash_code]);
+
+	self->values[hash_code] = NULL;
+}
+
 void print_key_values(Map *self)
 {
 	printf("key-values = [\n");
@@ -246,11 +291,24 @@ Map *initialize_map()
 
 	map->get = get;
 	map->put = put;
+	map->delete = delete;
 	map->print_key_values = print_key_values;
 	map->containsKey = containsKey;
 	map->sort_keys = sort_keys;
 
 	return map;
+}
+
+void *release_map(Map *map)
+{
+	for (int i = map->size - 1; i >= 0; i--)
+	{
+		Key *key = map->keys[i];
+
+		map->delete (map, key->val);
+	}
+
+	free(map);
 }
 
 int main(int argc, char *argv[])
@@ -261,24 +319,29 @@ int main(int argc, char *argv[])
 
 	words_count_map = initialize_map();
 
-	for (int i = 0; i < split_word_count; i++)
+	if (split_word_count > 0)
 	{
-		char *word = words[i];
+		for (int i = 0; i < split_word_count; i++)
+		{
+			char *word = words[i];
 
-		if (words_count_map->containsKey(words_count_map, word))
-		{
-			int count = words_count_map->get(words_count_map, word);
-			count++;
-			words_count_map->put(words_count_map, word, count);
+			if (words_count_map->containsKey(words_count_map, word))
+			{
+				int count = words_count_map->get(words_count_map, word);
+				count++;
+				words_count_map->put(words_count_map, word, count);
+			}
+			else
+			{
+				words_count_map->put(words_count_map, word, 1);
+			}
 		}
-		else
-		{
-			words_count_map->put(words_count_map, word, 1);
-		}
+
+		words_count_map->sort_keys(words_count_map);
+		words_count_map->print_key_values(words_count_map);
 	}
 
-	words_count_map->sort_keys(words_count_map);
-	words_count_map->print_key_values(words_count_map);
+	release_map(words_count_map);
 
 	return 0;
 }
