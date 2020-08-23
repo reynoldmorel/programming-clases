@@ -105,7 +105,7 @@ int hash(char *key)
 
 		if (i > 0)
 		{
-			result += key[0] / key_length;
+			result += key[i - 1] / key_length;
 		}
 	}
 
