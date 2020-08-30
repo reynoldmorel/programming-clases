@@ -4,64 +4,93 @@
 
 #define TOTAL_ELEMENTS 7
 
-int numbers[TOTAL_ELEMENTS] = {10,  100, 105, 30, 80, 40, 500};
+int numbers[TOTAL_ELEMENTS] = {10, 100, 105, 30, 80, 40, 500};
 
-void quick_sort(int from_index, int to_index);
-int locate_pivot(int from_index, int to_index);
-
-int main(int argc, char** argv) {
-	
-	printf("Sin Ordenar\n");
-	
-	for(int i = 0; i < TOTAL_ELEMENTS; i++) {
-		printf("numbers[%d] = %d\n", i, numbers[i]);
-	}
-	
-	quick_sort(0, TOTAL_ELEMENTS - 1);
-	
-	printf("Ordenado\n");
-	
-	for(int i = 0; i < TOTAL_ELEMENTS; i++) {
-		printf("numbers[%d] = %d\n", i, numbers[i]);
-	}
-	
-	return 0;
+void swap(int *a, int *b)
+{
+	int tmp = *a;
+	*a = *b;
+	*b = tmp;
 }
 
-void quick_sort(int from_index, int to_index) {	
-	if(from_index < to_index) {
-		int pivot_index = locate_pivot(from_index, to_index);
-		
-		quick_sort(from_index, pivot_index - 1);
-		quick_sort(pivot_index + 1, to_index);
-	}
-}
+int partition(int arr[], int low, int high)
+{
+	int pivot = arr[high];
+	int i = low - 1;
 
-int locate_pivot(int from_index, int to_index) {
-	int piv = numbers[to_index];
-	int i = from_index - 1;
-	
-	for(int j = from_index; j <= to_index - 1; j++) {
-		if(piv > numbers[j]) {
+	for (int j = low; j < high; j++)
+	{
+		if (arr[j] < pivot)
+		{
 			i++;
-			
-			int temp = numbers[j];
-			numbers[j] = numbers[i];
-			numbers[i] = temp;
+			swap(&arr[i], &arr[j]);
 		}
 	}
-	
-	int temp = numbers[i + 1];
-	numbers[i + 1] = piv;
-	numbers[to_index] = temp;
-	
+
+	swap(&arr[i + 1], &arr[high]);
+
 	return i + 1;
 }
 
+void quick_sort(int arr[], int low, int high)
+{
+	if (low < high)
+	{
+		int pi = partition(arr, low, high);
 
+		quick_sort(arr, low, pi - 1);
+		quick_sort(arr, pi + 1, high);
+	}
+}
 
+void quick_sort_dynamic_programming(int arr[], int low, int high)
+{
+	int stack[high - low + 1];
 
+	int top = -1;
 
+	stack[++top] = low;
+	stack[++top] = high;
 
+	while (top >= 0)
+	{
+		high = stack[top--];
+		low = stack[top--];
 
+		int pi = partition(arr, low, high);
 
+		if (pi - 1 > low)
+		{
+			stack[++top] = low;
+			stack[++top] = pi - 1;
+		}
+
+		if (pi + 1 < high)
+		{
+			stack[++top] = pi + 1;
+			stack[++top] = high;
+		}
+	}
+}
+
+int main(int argc, char **argv)
+{
+
+	printf("Sin Ordenar\n");
+
+	for (int i = 0; i < TOTAL_ELEMENTS; i++)
+	{
+		printf("numbers[%d] = %d\n", i, numbers[i]);
+	}
+
+	quick_sort(numbers, 0, TOTAL_ELEMENTS - 1);
+
+	printf("Ordenado\n");
+
+	for (int i = 0; i < TOTAL_ELEMENTS; i++)
+	{
+		printf("numbers[%d] = %d\n", i, numbers[i]);
+	}
+
+	return 0;
+}
