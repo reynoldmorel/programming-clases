@@ -1,6 +1,8 @@
-# Foobar
 
-Accelerated Restaturant App.
+
+## Accelerated Restaturant App.
+
+OOP based app for ordering food.
 
 ## Installation
 
