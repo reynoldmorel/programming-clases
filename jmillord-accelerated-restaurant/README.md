@@ -1,6 +1,4 @@
-# Foobar
-
-Accelerated Restaturant App.
+# Accelerated Restaturant App.
 
 ## Installation
 
