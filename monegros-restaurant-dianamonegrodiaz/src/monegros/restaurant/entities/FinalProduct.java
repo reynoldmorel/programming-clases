@@ -8,7 +8,6 @@ public class FinalProduct extends Product {
 
     public FinalProduct() {
         super();
-        //this.products = new ArrayList<>();
     }
 
     public FinalProduct(Long id) {

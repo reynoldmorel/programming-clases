@@ -84,7 +84,9 @@ public class Order {
 	public void setTotalAmount(Double totalAmount) {
         this.totalAmount = totalAmount;
     }
-    
+    public void sendOrderToCashier(Order myOrder, Cashier cashier) {
+    	cashier.recieveOrder(myOrder);
+    }
 
     @Override
     public boolean equals(Object o) {
