@@ -6,43 +6,59 @@ KReyes Gourmet Cuisine  is an application project for a restaurant, which consis
      
 ### General flow
                                            
-* The client accesses the application and looks for the food menu.
-* Choose the desired dish if it is available.
-* Choose the characteristics of your food such as: ingredients, accompaniments, etc.
-* Once you have chosen everything you want, the order is created.
-* The customer now has access to see the preparation process.
-* Once the order is ready, the customer is notified.
-* The customer can choose between picking up their food or receiving by delivery.
+* Client orders an item from the menu.
+* Once the client pays for the order then the order is enqueue to the kitchen.
+* The chef prepares the order for the client.
+* Once the chef finishes, the order is removed from the queue.
+* The restaurant can compute how much has been sold.
+
+## Stack
+
+* [Java](https://www.java.com/es/)
+* [IntelliJ IDEA](https://www.jetbrains.com/idea/)
+* [Git](https://git-scm.com/)
 
 ## Setup
 
 This project is being developed in java and in order to start its development
 the following steps should be taken:
 
-1. It is suggested to create an [Oracle](https://profile.oracle.com/myprofile/account/create-account.jspx) account  as this facilitates many services and it allows us to download the desired version of the JDK, in case of not creating the account, you can search for a free version.
+As a requirement must have installed Windows 10 operating system.
 
-2. Download and install the java developer kit [JDK_11](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html).
+1. Download and install [Java 11](https://www.oracle.com/java/technologies/javase-jdk11-downloads.html).
 
-3. Set the path variable of JDk 11 in windows:
-    * Select Control Panel and then System.
-    * Click Advanced and then Environment Variables.
-    * Add the location of the bin folder of the JDK installation to the PATH variable in System Variables.
+2. Set the path variable of JDk 11 in windows 10:
+    * Open the Start Search, type in “env”, and choose “Edit the system environment variables”:
 
-4. Download and install the Community version of [IntelliJ_IDEA](https://www.jetbrains.com/es-es/idea/download/#section=windows).
+    ![picture](imgs/step1.png)
 
-5. Download and install [GIT](https://git-scm.com/).
-6. Setup you git credentials in the terminal:
+    * Click the “Environment Variables…” button.
+
+    ![picture](imgs/step2.png)
+
+    * In the part below select path and press the edit button.
+
+    ![picture](imgs/step3.png)
+
+    * Add the location of the bin folder of the JDK installation to the PATH variable in System Variables then press ok.
+
+    ![picture](imgs/step4.png)
+
+3. Download and install the Community version of [IntelliJ IDEA](https://www.jetbrains.com/es-es/idea/download/#section=windows).
+
+4. Download and install [GIT](https://git-scm.com/).
+5. Setup you git credentials in the terminal:
 
     `git config user.name" [Name] [Last Name] "`
     
     `git config user.email" [Email] "`
 
-7. It is recommended to use a project repository for better management such as:
+6. It is recommended to use a project repository for better management such as:
     * [Github](https://github.com/)
     
     * [Bitbucket](https://bitbucket.org/)
 
-8. It only remains to start developing.
+7. Enjoy it!
 
 
 
@@ -60,13 +76,13 @@ This project is divided into several sections to keep a better work flow, the fo
 
 **Employee**is an user type that generate a code for employee.
 
-**FinalProduct** is the item option to sell for the client. 
+**FinalProduct** is a product prepared, ready to deliver. 
 
-**MeasureUnit** is one of the tool use to keep control of stock and  quantity  of any ingrediente of items to sell.
+**MeasureUnit** is one of the tool use to keep control of item quantity.
 
 **Menu** is the list of all available items to sell.
 
-**MenuItem** is each items to sell at list.
+**MenuItem** is an item to be sold within a menu.
 
 **Order** is the  items to sell request.
 
@@ -74,7 +90,7 @@ This project is divided into several sections to keep a better work flow, the fo
 
 **Product** is a list of products that can be prepared.
 
-**Stock** is the inventory of ingredients.
+**Stock** it handle the availability of a product.
 
 **StockProduct** is the detailed product from the stock.
 
