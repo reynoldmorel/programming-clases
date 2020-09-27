@@ -1,4 +1,4 @@
-package com.reynolds.decious.restaurant.respositories.impl;
+package com.reynolds.decious.restaurant.respositories.impl.mysql;
 
 import com.reynolds.decious.restaurant.entities.Cashier;
 import com.reynolds.decious.restaurant.respositories.ICashierRepository;
@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class CashierRepository implements ICashierRepository {
+public class CashierMysqlRepository implements ICashierRepository {
     private final Set<Cashier> cashierStore = new HashSet<>();
     private Long subSequentId = 0L;
 
