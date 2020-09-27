@@ -40,7 +40,6 @@ public class MenuItemRepository implements IMenuItemRepository{
     }
     @Override
     public Optional<MenuItem> findById(Long id) {
-
     	MenuItem existing = myMenuItems.stream()
                 .filter(c -> c.getId().equals(id))
                 .findFirst()

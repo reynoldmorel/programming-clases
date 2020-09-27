@@ -40,8 +40,8 @@ public class CashierRepository implements ICashierRepository {
 
         return Optional.of(Boolean.TRUE);
     }
+    @Override
     public Optional<Cashier> findById(Long id) {
-
     	Cashier existing = cashierStore.stream()
                 .filter(c -> c.getId().equals(id))
                 .findFirst()

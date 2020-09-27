@@ -44,7 +44,6 @@ public class ChefRepository implements IChefRepository{
     }
     @Override
     public Optional<Chef> findById(Long id) {
-
     	Chef existing = myChefs.stream()
                 .filter(c -> c.getId().equals(id))
                 .findFirst()

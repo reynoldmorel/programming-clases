@@ -45,7 +45,6 @@ public class ClientRepository implements IClientRepository{
     }
     @Override
     public Optional<Client> findById(Long id) {
-
     	Client existing = myClients.stream()
                 .filter(c -> c.getId().equals(id))
                 .findFirst()

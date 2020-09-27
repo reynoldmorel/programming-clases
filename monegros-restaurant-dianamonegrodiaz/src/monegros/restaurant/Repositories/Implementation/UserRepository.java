@@ -43,7 +43,6 @@ public class UserRepository implements IUserRepository{
     }
     @Override
     public Optional<User> findById(Long id) {
-
     	User existing = myUsers.stream()
                 .filter(c -> c.getId().equals(id))
                 .findFirst()

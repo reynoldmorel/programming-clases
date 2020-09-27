@@ -39,7 +39,6 @@ public class StockRepository implements IStockRepository {
     }
     @Override
     public Optional<Stock> findById(Long id) {
-
     	Stock existing = myStock.stream()
                 .filter(c -> c.getId().equals(id))
                 .findFirst()

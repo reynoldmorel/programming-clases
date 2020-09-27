@@ -41,7 +41,6 @@ public class StockProductRepository implements IStockProductRepository{
     }
     @Override
     public Optional<StockProduct> findById(Long id) {
-
     	StockProduct existing = myStockProducts.stream()
                 .filter(c -> c.getId().equals(id))
                 .findFirst()
