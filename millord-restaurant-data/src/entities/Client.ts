@@ -2,6 +2,7 @@ import { User } from './User'
 
 
 export class Client extends User {
+<<<<<<< HEAD
   private _code?: string
 
   constructor() {
@@ -14,6 +15,23 @@ export class Client extends User {
 
   set code(value: string | undefined) {
     this._code = value
+=======
+  private code?: string
+  constructor(id?: string) {
+    super(id)
+  }
+
+  public Client(id: string) {
+    return id
+  }
+
+  public getCode() {
+    return this.code
+  }
+
+  public setCode(code: string) {
+    return this.code = code
+>>>>>>> e5e309a229e3d2976167e70c766c15802cac1c9b
   }
 
 }
