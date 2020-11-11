@@ -5,5 +5,6 @@ import monegros.restaurant.entities.Stock;
 
 public interface IStockService {
 	Optional<Stock> insert(Stock stock);
+
 	Optional<Stock> findById(Long id);
 }

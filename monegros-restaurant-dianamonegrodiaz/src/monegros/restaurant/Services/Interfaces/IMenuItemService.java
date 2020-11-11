@@ -5,5 +5,6 @@ import monegros.restaurant.entities.MenuItem;
 
 public interface IMenuItemService {
 	Optional<MenuItem> insert(MenuItem menuItem);
+
 	Optional<MenuItem> findById(Long id);
 }

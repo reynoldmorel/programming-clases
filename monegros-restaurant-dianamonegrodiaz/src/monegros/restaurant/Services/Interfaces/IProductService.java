@@ -5,5 +5,6 @@ import monegros.restaurant.entities.Product;
 
 public interface IProductService {
 	Optional<Product> insert(Product product);
+
 	Optional<Product> findById(Long id);
 }
