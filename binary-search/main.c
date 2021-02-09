@@ -2,53 +2,71 @@
 #include <stdlib.h>
 
 #define TOTAL_ELEMENTS 10
-int numbers[] = {10, 20, 35, 80, 100, 110, 120, 121, 136, 150};
 
-int search(int val_to_find);
-int binary_search(int val_to_find, int lower_bound, int higher_bound, int half);
+// Variables and functions declarations
+int newBinarySearch(int valToFind, int array[TOTAL_ELEMENTS]);
+int numbers[TOTAL_ELEMENTS];
+int searchIndex;
+int valToFind;
+void checkResult(int result);
 
-int main(int argc, char ** argv)
+// Main function
+int main()
 {
-    int val_to_find = 10;
-    printf("-----------search()--------------\n");
-    int index_found = search(val_to_find);
-    printf("index_found = %d\n", index_found);
-    printf("-----------binary_search()--------------\n");
-    int index_found_by_binary_search = binary_search(val_to_find, 0, TOTAL_ELEMENTS - 1, (TOTAL_ELEMENTS - 1) / 2);
-    printf("index_found_by_binary_search = %d\n", index_found_by_binary_search);
+    for (int i = 0; i < TOTAL_ELEMENTS; i++)
+    {
+        numbers[i] = i;
+    }
+
+    valToFind = 2;
+    searchIndex = newBinarySearch(valToFind, numbers);
+
+    checkResult(searchIndex);
+
     return 0;
 }
 
-int search(int val_to_find)
+// New Binary Search function
+int newBinarySearch(int valToFind, int array[TOTAL_ELEMENTS])
 {
-    if(val_to_find == numbers[TOTAL_ELEMENTS - 1]) {
-        return TOTAL_ELEMENTS - 1;
-    }
+    int lowerBound = 0;
+    int higherBound = TOTAL_ELEMENTS - 1;
+    int half = (higherBound + lowerBound) / 2;
 
-    for(int i = 0; i < TOTAL_ELEMENTS; i++) {
-        printf("i = %d\n", i);
-        if(numbers[i] == val_to_find) {
-            return i;
+    while(half >= lowerBound && half <= higherBound)
+    {   
+        //printf("Value in array: %d    index: %d\n", array[half], half); /* Just for test purpuses */
+        if (valToFind == array[half])
+        {
+            return half;
         }
-    }
+        else if ( valToFind > array[half])
+        {
+            lowerBound = half + 1;
+        }
+        else if (valToFind < array[half])
+        {
+            higherBound = half - 1;
+        }
+        else
+        {
+            return -1;
+        }
 
+        half = (higherBound + lowerBound) / 2;
+    }
     return -1;
 }
 
-int binary_search(int val_to_find, int lower_bound, int higher_bound, int half)
+// Check Result function
+void checkResult(int result)
 {
-    printf("half = %d\n", half);
-    if(half < lower_bound || half > higher_bound) {
-        return -1;
+    if (result >- 0)
+    {
+        printf("El valor se encuentra en la posición: %d\n\n", result);
     }
-
-    if(val_to_find == numbers[half]) {
-        return half;
-    } else if(val_to_find > numbers[half]) {
-        lower_bound = half + 1;
-        return binary_search(val_to_find, lower_bound, higher_bound, (higher_bound + lower_bound) / 2);
-    } else if(val_to_find < numbers[half]) {
-        higher_bound = half - 1;
-        return binary_search(val_to_find, lower_bound, higher_bound, (higher_bound + lower_bound) / 2);
+    else
+    {
+        printf("El valor no se encuentra en el arreglo dado.\n\n");
     }
 }
