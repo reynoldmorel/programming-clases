@@ -61,7 +61,7 @@ int newBinarySearch(int valToFind, int array[TOTAL_ELEMENTS])
 // Check Result function
 void checkResult(int result)
 {
-    if (result >- 0)
+    if (result >= 0)
     {
         printf("El valor se encuentra en la posición: %d\n\n", result);
     }

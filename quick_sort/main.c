@@ -6,31 +6,42 @@ int numbers[]  = {200, 1, 5, 6, 100, 25, 13, 7, 9, 3, 4};
 int numbers_to_use_quick_sort[] = {200, 1, 5, 6, 100, 25, 13, 7, 4, 3, 9};
 
 void bubble_sort();
+void recursive_bubble_sort(int low, int high);
+
 void quick_sort(int low, int high);
 int partition(int low, int high);
 
 int main(int argc, char ** argv)
 {
     printf("------- Original array --------\n");
-    for(int i = 0; i < TOTAL_ELEMENTS; i++) {
-        printf("%d, ", numbers[i]);
+    printf("[ %d", numbers[0]);
+    for(int i = 1; i < TOTAL_ELEMENTS; i++) {
+        printf(", %d ", numbers[i]);
     }
+    printf("]\n");
 
-    bubble_sort();
+    // bubble_sort();
+    printf("\n------- Sorting process (recursive bubble sort) --------\n");
+    recursive_bubble_sort( 0, TOTAL_ELEMENTS - 1);
 
-    printf("\n------- Sorted array (bubble sort) --------\n");
-
-    for(int i = 0; i < TOTAL_ELEMENTS; i++) {
-        printf("%d, ", numbers[i]);
+    // printf("\n------- Sorted array (bubble sort) --------\n");
+    printf("\n------- Sorted array (recursive bubble sort) --------\n");
+    printf("[ %d", numbers[0]);
+    for(int i = 1; i < TOTAL_ELEMENTS; i++) {
+        printf(", %d", numbers[i]);
     }
+    printf("]\n");
 
+    printf("\n------- Sorting process (quick sort) --------\n");
     quick_sort(0, TOTAL_ELEMENTS - 1);
 
     printf("\n------- Sorted array (quick sort) --------\n");
-
-    for(int i = 0; i < TOTAL_ELEMENTS; i++) {
-        printf("%d, ", numbers_to_use_quick_sort[i]);
+    printf("[ %d", numbers_to_use_quick_sort[0]);
+    for(int i = 1; i < TOTAL_ELEMENTS; i++) {
+        printf(", %d", numbers_to_use_quick_sort[i]);
     }
+    printf("]\n");
+
     return 0;
 }
 
@@ -55,6 +66,32 @@ void bubble_sort()
             break;
         }
     }
+}
+
+void recursive_bubble_sort(int low, int high)
+{
+    if (low >= high)
+    {
+        return 0;
+    }
+    else
+    {
+        printf("------- Iterating again --------\n");
+        for (int i = 0; i < high; i++)
+        {
+            if (numbers[i] > numbers[i + 1])
+            {
+                printf("Swaping %d with %d\n", numbers[i], numbers[i + 1]);
+                int tmp = numbers[i];
+                numbers[i] = numbers[i + 1];
+                numbers[i + 1] = tmp;
+            }
+            
+        }
+    }
+
+    return recursive_bubble_sort(low, high - 1);
+
 }
 
 // Time complexity: O(n * log(n))
