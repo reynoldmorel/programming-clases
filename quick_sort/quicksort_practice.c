@@ -6,13 +6,12 @@
 
 int numbers_RQS[] = {200, 1, 5, 6, 100, 25, 13, 7, 9, 3, 4};
 int userValue;
+int valueInArray;
 
 void printArray();
-int randomSelection(int low, int high, int orderStatistic);
 void swap(int a, int b);
 void randomizedQuickSort(int low, int high);
 int partition(int low, int high, int print);
-int newBinarySearch(int valToFind, int array[TOTAL_ELEMENTS]);
 void checkResult(int result);
 
 
@@ -22,21 +21,20 @@ int main(int argc, char ** argv)
 
     printf("\n------------ Original array ------------\n");
     printArray();
-    printf("----------------------------------------\n");
+    printf("------------------------------------------\n");
 
-    //userValue = 15;
     printf( "\nIntroduzca una edad que desee buscar en la lista: ");
     scanf("%d", &userValue);
 
-    printf("\n------- Sorting process (randomized quick sort) --------\n");
+    printf("\n----------- Sorting process (randomized quick sort) ------------\n");
     randomizedQuickSort(0, TOTAL_ELEMENTS - 1);
-    printf("\n--------------------------------------------------------\n");
+    printf("\n----------------------------------------------------------------\n");
 
-    printf("\n--------- Sorted array (randomized quick sort) ---------\n");
+    printf("\n--------- Final State of array (randomized quick sort) ---------\n");
     printArray();
-    printf("--------------------------------------------------------\n");
+    printf("------------------------------------------------------------------\n");
 
-    checkResult(newBinarySearch(userValue, numbers_RQS));
+    checkResult(valueInArray);
 
     return 0;
 }
@@ -51,37 +49,6 @@ void printArray()
     printf("]\n");
 }
 
-int newBinarySearch(int valToFind, int array[TOTAL_ELEMENTS])
-{
-    int lowerBound = 0;
-    int higherBound = TOTAL_ELEMENTS - 1;
-    int half = (higherBound + lowerBound) / 2;
-
-    while(half >= lowerBound && half <= higherBound)
-    {   
-        //printf("Value in array: %d    index: %d\n", array[half], half); /* Just for test purpuses */
-        if (valToFind == array[half])
-        {
-            return half;
-        }
-        else if ( valToFind > array[half])
-        {
-            lowerBound = half + 1;
-        }
-        else if (valToFind < array[half])
-        {
-            higherBound = half - 1;
-        }
-        else
-        {
-            return -1;
-        }
-
-        half = (higherBound + lowerBound) / 2;
-    }
-    return -1;
-}
-
 void swap(int a, int b)
 {
     int tmp = numbers_RQS[a];
@@ -89,57 +56,20 @@ void swap(int a, int b)
     numbers_RQS[b] = tmp;
 }
 
-int randomSelection(int low, int high, int orderStatistic)
-{
-    if (low < high)
-    {
-        // randomized selection
-        int randomIndex = (rand() % (high - low + 1)) + low;
-
-        // moving pivot to the end of the array
-        swap(randomIndex, high);
-
-        int pivotIndex = partition(low, high, 0);
-
-        //printf("\nValue: %d, index: %d\n", numbers_RQS[pivotIndex], pivotIndex); // test
-
-        if (pivotIndex == orderStatistic) return pivotIndex;
-        else if (pivotIndex > orderStatistic)
-        {
-            return randomSelection(low, pivotIndex - 1, orderStatistic);
-        }
-        else if (pivotIndex < orderStatistic)
-        {
-            return randomSelection(pivotIndex + 1, high, orderStatistic);
-        }
-    }
-    else
-    {
-        return low;        
-    } 
-}
-
 void randomizedQuickSort(int low, int high)
 {
-    int orderStatistic;
-    if ((high - low + 1) % 2)   // Si cantidad total de elementos es impar
-        {
-            orderStatistic = ((((high - low + 1) + 1) / 2) - 1) + low;
-        }
-        else                        // Si cantidad total de elementos es par
-        {
-            orderStatistic = (((high - low + 1) / 2) - 1) + low;
-        }
-
     if(low < high) 
     {   
-        int medianPivot = randomSelection(low, high, orderStatistic);
-
-        printf(">> Median pivot : %d\n", numbers_RQS[medianPivot]);
-
-        swap(medianPivot, high);
+        int randomIndex = (rand() % (high - low + 1)) + low;
+        printf(">> Random pivot : %d\n", numbers_RQS[randomIndex]);
+        swap(randomIndex, high);
 
         int pivot = partition(low, high, 1);
+
+        if (valueInArray == 1)
+        {
+            return;
+        }
 
         randomizedQuickSort(low, pivot - 1);
         randomizedQuickSort(pivot + 1, high);
@@ -152,8 +82,17 @@ int partition(int low, int high, int print)
     int j     = (low - 1);
     int i     = low;
 
+    if (numbers_RQS[high] == userValue)
+        {
+            return valueInArray = 1;
+        }
+
     for(; i <= high - 1; i++) {
-        if(numbers_RQS[i] < pivot)
+        if (numbers_RQS[i] == userValue)
+        {
+            return valueInArray = 1;
+        }
+        else if (numbers_RQS[i] < pivot)
         {
             if (print)
             {
@@ -177,7 +116,7 @@ int partition(int low, int high, int print)
 
 void checkResult(int result)
 {
-    if (result >= 0)
+    if (result > 0)
     {
         printf("\n[~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~]");
         printf("\n| La edad se encuentra en la lista de datos. |");
