@@ -1,9 +1,0 @@
-1. Given an input of countries with their surface area, search for a country given a surface area. All countries and surface areas will be unique.
-2. Develop the recursive version of the binary search algorithm.
-3. Generate the fibonacci series both versions: recusive and using loops.
-4. Create a Hacker Rank account.
-5. Filter execises by EASY and SEARCH and do all of them.
-6. Filter exercises by EASY and STRINGS and 5 of them.
-7. Filter exercises by EASY and STRINGS and 5 of them.
-8. Filter execises by EASY and WARMUP and do all of them.
-9. Filter exercises by EASY and GREEDY and 5 of them.
