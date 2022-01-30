@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+int cache[10];
+
 unsigned long compute_fact(int num1);
 unsigned long compute_fact2(int num1);
 
@@ -39,7 +41,17 @@ unsigned long compute_fact(int num1)
         return num1;
     }
 
-    return num1 * compute_fact(num1 - 1);
+    if(cache[num1] > 0) {
+        return cache[num1];
+    }
+
+    // printf("\n------ Compute Fact %d -----\n", num1);
+
+    int result = num1 * compute_fact(num1 - 1);
+    
+    cache[num1] = result; 
+
+    return result;
 }
 
 // Time complexity O(n)
