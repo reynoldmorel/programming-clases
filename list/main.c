@@ -11,7 +11,7 @@ struct List
     void (*add)(List *self, int item);
     void (*delete)(List *self, int index);
     void (*insert)(List *self, int index, int item);
-    int (*set)(List *self, int index, int item);
+    void (*set)(List *self, int index, int item);
     void (*print_items)(List *self);
 };
 
@@ -21,7 +21,7 @@ int get(List *self, int index);
 void add(List *self, int item);
 void delete (List *self, int index);
 void insert(List *self, int index, int item);
-int set(List *self, int index, int item);
+void set(List *self, int index, int item);
 void print_items(List *self);
 
 int main(int argc, char **argv)
@@ -86,7 +86,7 @@ void release_list(List *list)
 
 // Space Complexity: O(1)
 // Time Complexity: O(1)
-int set(List *self, int index, int item)
+void set(List *self, int index, int item)
 {
     self->items[index] = item;
 }
