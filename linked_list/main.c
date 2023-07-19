@@ -95,6 +95,11 @@ void release_linked_list(LinkedList *linked_list)
 
 void traverse_post_order_and_release_nodes(Node *node)
 {
+    if (node == NULL)
+    {
+        return;
+    }
+
     if (node->next != NULL)
     {
         traverse_post_order_and_release_nodes(node->next);
@@ -105,6 +110,11 @@ void traverse_post_order_and_release_nodes(Node *node)
 
 void traverse_pre_order_and_print_nodes(Node *node)
 {
+    if (node == NULL)
+    {
+        return;
+    }
+
     printf("%d,", node->value);
 
     if (node->next != NULL)
@@ -142,6 +152,11 @@ void print_items(LinkedList *self)
 
 Node *traverse_and_get_node_by_index(Node *node, int index, int index_count)
 {
+    if (node == NULL)
+    {
+        return;
+    }
+
     if (index == index_count)
     {
         return node;
