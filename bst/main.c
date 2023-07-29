@@ -140,22 +140,27 @@ Node *traverse_and_add(BinarySearchTree *self, Node *node, int item)
     return node;
 }
 
+// O(n) = time complexity
 void add(BinarySearchTree *self, int item)
 {
     self->root = traverse_and_add(self, self->root, item);
 }
 
+// O(n) = time complexity
 void print_items_postorder(BinarySearchTree *self)
 {
     printf("\n------------  BinarySearchTree  POSTORDER  ---------------\n");
     traverse_postorder_and_print_nodes(self->root);
 }
 
+// O(n) = time complexity
 void print_items_preorder(BinarySearchTree *self)
 {
     printf("\n------------  BinarySearchTree  PREORDER  ---------------\n");
     traverse_preorder_and_print_nodes(self->root);
 }
+
+// O(n) = time complexity
 void print_items_inorder(BinarySearchTree *self)
 {
     printf("\n------------  BinarySearchTree  INORDER  ---------------\n");
@@ -243,6 +248,7 @@ Node *traverse_and_get(Node *node, int item)
     }
 }
 
+// O(n) = time complexity
 Node *get(BinarySearchTree *self, int item)
 {
     return traverse_and_get(self->root, item);
