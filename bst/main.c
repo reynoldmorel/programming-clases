@@ -18,6 +18,7 @@ struct BinarySearchTree
     int size;
     Node *(*get)(BinarySearchTree *self, int item);
     void (*add)(BinarySearchTree *self, int item);
+    void (*delete)(BinarySearchTree *self, int item);
     void (*print_items_postorder)(BinarySearchTree *self);
     void (*print_items_preorder)(BinarySearchTree *self);
     void (*print_items_inorder)(BinarySearchTree *self);
@@ -28,6 +29,7 @@ void release_binary_search_tree(BinarySearchTree *binary_search_tree);
 
 void add(BinarySearchTree *self, int item);
 Node *get(BinarySearchTree *self, int item);
+void delete(BinarySearchTree *self, int item);
 void print_items_postorder(BinarySearchTree *self);
 void print_items_preorder(BinarySearchTree *self);
 void print_items_inorder(BinarySearchTree *self);
@@ -36,6 +38,7 @@ Node *initialize_node(int item);
 void traverse_post_order_and_release_nodes(Node *node);
 Node *traverse_and_add(BinarySearchTree *self, Node *node, int item);
 Node *traverse_and_get(Node *node, int item);
+Node *traverse_and_delete(Node *node, int item);
 void traverse_postorder_and_print_nodes(Node *node);
 void traverse_preorder_and_print_nodes(Node *node);
 void traverse_inorder_and_print_nodes(Node *node);
@@ -51,6 +54,7 @@ int main()
     binary_search_tree->add(binary_search_tree, 1);
     binary_search_tree->add(binary_search_tree, 6);
     binary_search_tree->add(binary_search_tree, 500);
+    binary_search_tree->add(binary_search_tree, 45);
 
     binary_search_tree->print_items_postorder(binary_search_tree);
     binary_search_tree->print_items_preorder(binary_search_tree);
@@ -59,6 +63,20 @@ int main()
     Node *found = binary_search_tree->get(binary_search_tree, 6);
 
     printf("\nThe value found was: %d\n", found->value);
+
+    printf("\nDELETE test\n");
+
+    binary_search_tree->delete (binary_search_tree, 50);
+
+    binary_search_tree->print_items_postorder(binary_search_tree);
+    binary_search_tree->print_items_preorder(binary_search_tree);
+    binary_search_tree->print_items_inorder(binary_search_tree);
+
+    binary_search_tree->delete (binary_search_tree, 60);
+
+    binary_search_tree->print_items_postorder(binary_search_tree);
+    binary_search_tree->print_items_preorder(binary_search_tree);
+    binary_search_tree->print_items_inorder(binary_search_tree);
 
     release_binary_search_tree(binary_search_tree);
 
@@ -77,6 +95,7 @@ BinarySearchTree *initialize_binary_search_tree()
     binary_search_tree->print_items_preorder = &print_items_preorder;
     binary_search_tree->print_items_inorder = &print_items_inorder;
     binary_search_tree->get = &get;
+    binary_search_tree->delete = &delete;
 
     return binary_search_tree;
 }
@@ -255,3 +274,72 @@ Node *get(BinarySearchTree *self, int item)
 }
 
 // Add delete process.
+
+Node *traverse_and_delete(Node *node, int item)
+{
+    if (node->value == item)
+    {
+        Node *node_to_replace = NULL;
+
+        if (node->right != NULL && node->left != NULL)
+        {
+
+            node_to_replace = node->right;
+
+            if (node_to_replace->left != NULL)
+            {
+                while (node_to_replace->left != NULL)
+                {
+                    node_to_replace = node_to_replace->left;
+                }
+
+                node_to_replace->parent->left = node_to_replace->right;
+            }
+
+            if (node->left->value != node_to_replace->value)
+            {
+                node->left->parent = node_to_replace;
+                node_to_replace->left = node->left;
+            }
+
+            if (node->right->value != node_to_replace->value)
+            {
+                node->right->parent = node_to_replace;
+                node_to_replace->right = node->right;
+            }
+
+            node_to_replace->parent = node->parent;
+        }
+        else if (node->right == NULL && node->left != NULL)
+        {
+            node->left->parent = node->parent;
+
+            node_to_replace = node->left;
+        }
+        else if (node->right != NULL && node->left == NULL)
+        {
+            node->right->parent = node->parent;
+
+            node_to_replace = node->right;
+        }
+
+        free(node);
+
+        return node_to_replace;
+    }
+    else if (item < node->value && node->left != NULL)
+    {
+        node->left = traverse_and_delete(node->left, item);
+    }
+    else if (item > node->value && node->right != NULL)
+    {
+        node->right = traverse_and_delete(node->right, item);
+    }
+
+    return node;
+}
+
+void delete(BinarySearchTree *self, int item)
+{
+    self->root = traverse_and_delete(self->root, item);
+}
