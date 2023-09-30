@@ -78,6 +78,8 @@ int main()
     binary_search_tree->print_items_preorder(binary_search_tree);
     binary_search_tree->print_items_inorder(binary_search_tree);
 
+    printf("\nSize: %d\n", binary_search_tree->size);
+
     release_binary_search_tree(binary_search_tree);
 
     return 0;
