@@ -38,7 +38,7 @@ Node *initialize_node(int item);
 void traverse_post_order_and_release_nodes(Node *node);
 Node *traverse_and_add(BinarySearchTree *self, Node *node, int item);
 Node *traverse_and_get(Node *node, int item);
-Node *traverse_and_delete(Node *node, int item);
+Node *traverse_and_delete(BinarySearchTree *self, Node *node, int item);
 void traverse_postorder_and_print_nodes(Node *node);
 void traverse_preorder_and_print_nodes(Node *node);
 void traverse_inorder_and_print_nodes(Node *node);
@@ -275,7 +275,7 @@ Node *get(BinarySearchTree *self, int item)
 
 // Add delete process.
 
-Node *traverse_and_delete(Node *node, int item)
+Node *traverse_and_delete(BinarySearchTree *self, Node *node, int item)
 {
     if (node->value == item)
     {
@@ -325,15 +325,17 @@ Node *traverse_and_delete(Node *node, int item)
 
         free(node);
 
+        self->size = self->size - 1;
+
         return node_to_replace;
     }
     else if (item < node->value && node->left != NULL)
     {
-        node->left = traverse_and_delete(node->left, item);
+        node->left = traverse_and_delete(self, node->left, item);
     }
     else if (item > node->value && node->right != NULL)
     {
-        node->right = traverse_and_delete(node->right, item);
+        node->right = traverse_and_delete(self, node->right, item);
     }
 
     return node;
@@ -341,5 +343,5 @@ Node *traverse_and_delete(Node *node, int item)
 
 void delete(BinarySearchTree *self, int item)
 {
-    self->root = traverse_and_delete(self->root, item);
+    self->root = traverse_and_delete(self, self->root, item);
 }
