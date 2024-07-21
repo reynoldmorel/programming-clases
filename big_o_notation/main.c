@@ -90,6 +90,8 @@ int compute1(int n) {
 // O(1)
 int factorial(int number)
 {
+    printf("n = %d\n", number);
+
     // a = {1,2} ciclos máquinas
     if (number == 0)
     {
@@ -322,4 +324,6 @@ int test_on_algo(int n)
             }
         }
     }
+
+    return 0;
 }
