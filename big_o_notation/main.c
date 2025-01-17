@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int factorial (int n);
+int factorial(int n);
 int test_n2_algo(int n);
 int test_log_algo(int n);
 
@@ -42,7 +42,7 @@ int main()
 // 0! = 1
 // 2! = 2 * 1 = 2,
 // 3! = 3 * 2 * 1 = 6,
-// 4! = 4 * 3 * 2 * 1 = 24 
+// 4! = 4 * 3 * 2 * 1 = 24
 
 // f(n) = (a + c) + (a + c) + .... + (a + b)
 // f(n) = (n - 1)(a + c) + (a + b)
@@ -51,11 +51,13 @@ int main()
 // Lim f(n) = ∞
 // n -> ∞
 // O(n)
-int factorial (int n) {
+int factorial(int n)
+{
     printf("\nfactorial\n");
 
     // 1 paso = a
-    if (n <= 1) {
+    if (n <= 1)
+    {
         // 1 paso = b
         return 1;
     }
@@ -119,7 +121,7 @@ int test_n2_algo(int n)
 //
 // Esto nos indica que el n número de operaciones que se realizan en el ciclo es logarítmico,
 // por ende volviendo arriba
-// 
+//
 // Lim f(n) = a + (log n(b + c + d)) + e
 // n -> ∞
 // Lim f(n) = log ∞
@@ -130,10 +132,13 @@ int test_log_algo(int n)
     // int k = n => a
     // k > 0 => b
     // k = k / 2 => c
-    
+
+    // a + n(b + c + d) + e
+
     // ...... analizar d solamente
-    // 12 = 12 / 2 = 6 / 2 = 3 / 2 = 1
-    // d(1 / 2 / 2 / 2)
+    // 12 = 12 / 2 = 6 / 2 = 3 / 2 = 1 / 2 = 0
+    // (d / 2 / 2 / 2)
+    // d(((1 / 2) / 2) / 2)
     // d(1 / 2 ^ n)
     // (2 / 1) / (2 / 1) / (2 / 1) / (2 / 1) / (2 / 1) / (2 / 1)
     //  k / 2 * (1 / 2) * (1 / 2) * (1 / 2)* (1 / 2)
@@ -144,5 +149,101 @@ int test_log_algo(int n)
     }
 
     // 1 paso = e
+    return 0;
+}
+
+// f(n) = (n (log n)) + (n (log n))
+// Lim f(n) = (n (log n)) + (n (log n))
+// n -> ∞
+// Lim f(n) = (∞ (log ∞)) + (∞ (log ∞)) = O(n log n)
+// n -> ∞
+// Asumamos que (n (log n)) = m
+// Lim f(n) = m + m = 2m = 2(n (log n)) = O(n log n)
+// n -> ∞
+int test_n_log_algo2(int n)
+{
+    int counter = 0;
+
+    for (int i = 0; i < n; i++)
+    {
+        printf("-------------------\n");
+        for (int k = i; k > 0; k = k / 2)
+        {
+            // 1 ciclo máq.
+            // printf("(%d, %d), ", i, k);
+            counter = counter + 1;
+            printf("un ciclo maquina 1\n");
+        }
+    }
+
+    printf("counter=%d\n", counter);
+    printf("======================\n");
+
+    counter = 0;
+
+    for (int i = 0; i < n; i++)
+    {
+        printf("-------------------\n");
+        for (int k = n; k > 0; k = k / 2)
+        {
+            // 1 ciclo máq.
+            // printf("(%d, %d), ", i, k);
+            counter = counter + 1;
+            printf("un ciclo maquina 2\n");
+        }
+    }
+
+    printf("counter=%d\n", counter);
+
+    return 0;
+}
+
+// f(n) = n^2 + (n (log n)) + (n (log n))
+// Lim f(n) = n^2 + (n (log n)) + (n (log n))
+// n -> ∞
+// Lim f(n) = ∞^2 + (∞ (log ∞)) + (∞ (log ∞)) = O(n^2)
+// n -> ∞
+// Asumamos que (n (log n)) = m
+// Lim f(n) = n^2 + m + m = n^2 + 2m = n^2 + 2(n (log n)) = O(n^2)
+// n -> ∞
+int test_n_log_algo3(int n)
+{
+    int counter = 0;
+
+    for (int i = 0; i < n; i++)
+    {
+        for (int k = 0; k < n; k++)
+        {
+            printf("test_n2_algo\n");
+        }
+    }
+
+    for (int i = 0; i < n; i++)
+    {
+        printf("-------------------\n");
+        for (int k = i; k > 0; k = k / 2)
+        {
+            counter = counter + 1;
+            printf("un ciclo maquina 1\n");
+        }
+    }
+
+    printf("counter=%d\n", counter);
+    printf("======================\n");
+
+    counter = 0;
+
+    for (int i = 0; i < n; i++)
+    {
+        printf("-------------------\n");
+        for (int k = n; k > 0; k = k / 2)
+        {
+            counter = counter + 1;
+            printf("un ciclo maquina 2\n");
+        }
+    }
+
+    printf("counter=%d\n", counter);
+
     return 0;
 }
