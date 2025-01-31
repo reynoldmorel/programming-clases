@@ -41,12 +41,15 @@ void swap(int index1, int index2)
     swap_count = swap_count + 1;
 }
 
+// O(n^2)
 void bubble_sort_asc()
 {
+
+    // O(n * g)
     for (int i = 0; i < number_list_size; i++)
     {
         int swap_occured = 0;
-
+        // g = O(n)
         for (int j = 0; j < number_list_size - 1; j++)
         {
             if (number_list[j] > number_list[j + 1])

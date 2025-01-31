@@ -53,6 +53,7 @@ int partion_index_asc(int pivot_index, int lower_bound_index, int upper_bound_in
     int pivot_value = number_list[pivot_index];
     int last_swapped_index = lower_bound_index - 1;
 
+    // O(n)
     for (int current_index = lower_bound_index; current_index <= upper_bound_index; current_index++)
     {
         int current_number = number_list[current_index];
@@ -77,6 +78,8 @@ int partion_index_asc(int pivot_index, int lower_bound_index, int upper_bound_in
     return last_swapped_index;
 }
 
+// Worst Case Scenario: O(n^2)
+// Avg. Case Scenario:  O(n * log n)
 void quick_sort_asc(int lower_bound_index, int upper_bound_index)
 {
     if (upper_bound_index <= lower_bound_index)
@@ -86,8 +89,22 @@ void quick_sort_asc(int lower_bound_index, int upper_bound_index)
 
     int pivot_index = select_pivot_index(lower_bound_index, upper_bound_index);
 
+    // g = O(n)
     int partition_index = partion_index_asc(pivot_index, lower_bound_index, upper_bound_index);
 
+    // mal pivote
+    // mantiene las particiones del arreglo
+    // desbalanceadas hacia un lado
+    // O(n * g)
+    //
+    // buen pivote
+    // parte el arreglo en 2
+    // y balancea las operaciones
+    // hacia ambos lados
+    // [1, 2, 3, 4, 5]
+    // [1,2] [4, 5]
+    // O(n * n(1 / 2 / 2 / 2 / 2 ...))
+    // O(n * log n)
     quick_sort_asc(lower_bound_index, partition_index - 1);
     quick_sort_asc(partition_index + 1, upper_bound_index);
 }

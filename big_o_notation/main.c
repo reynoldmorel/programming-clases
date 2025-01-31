@@ -113,7 +113,7 @@ int test_n2_algo(int n)
 // Cuando n tiende a infinito, las operaciones tienden a A, usemos A para denotar las operaciones dentro del ciclo
 // A(1 / 2 ^ n) = 1
 // A = 2 ^ n
-// Tomanddo en cuenta como funcionan los logaritmos
+// Tomando en cuenta como funcionan los logaritmos
 // 2^3 = 8
 // log2(8) = 3
 //
@@ -169,7 +169,7 @@ int test_n_log_algo2(int n)
         printf("-------------------\n");
         for (int k = i; k > 0; k = k / 2)
         {
-            // 1 ciclo máq.
+            // 1 paso
             // printf("(%d, %d), ", i, k);
             counter = counter + 1;
             printf("un ciclo maquina 1\n");
